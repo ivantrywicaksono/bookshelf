@@ -13,4 +13,10 @@ body {
 .input-section {
     display: flex;
     flex-direction:column;
+    width: 100%;
+}
+
+.input-section input, .input-section select, #submit-book-btn {
+    display: block;
+    width: 100%;
 }

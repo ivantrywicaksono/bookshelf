@@ -25,7 +25,7 @@
                 </div>
                 <div class="input">
                     <label for="js-book-year">Year</label>
-                    <input type="year" id="js-book-year">
+                    <input type="number" id="js-book-year">
                 </div>
                 <div class="input">
                     <label for="js-book-status">Status</label>
@@ -35,7 +35,7 @@
                         <option value="2">Finished</option>
                     </select>
                 </div>
-                <button type="submit">Add</button>
+                <button type="submit" id="submit-book-btn">Add</button>
             </form>
         </section>
         <section>
@@ -45,14 +45,24 @@
                     <button type="button" id="js-in-progress">In Progress</button>
                     <button type="button" id="js-finished">Finished</button>    
                 </div>
+                <div class="book-search">
+                    <h1>Find Book</h1>
+                    <select name="search-category" id="js-search-category">
+                        <option value="title">Title</option>
+                        <option value="author">Author</option>
+                        <option value="year">Year</option>
+                    </select>
+                    <input type="text" id="js-book-search-input">
+                    <button type="submit">Search</button>
+                </div>
                 <div class="shelves-content">
-                    <div id="js-not-started__list">
+                    <div id="js-not-started-list">
                         <h1>Not Started</h1>
                     </div>
-                    <div id="js-in-progress__list">
+                    <div id="js-in-progress-list">
                         <h1>In Progress</h1>
                     </div>
-                    <div id="js-finished__list">
+                    <div id="js-finished-list">
                         <h1>Finished</h1>
                     </div>
                 </div>
