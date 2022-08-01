@@ -1,7 +1,16 @@
 * {
     margin: 0;
 }
+:root {
+    --main-text-color: rgb(0, 0, 0);
+    --main-bg-color: rgb(238, 238, 238)
+}
 
-.navbar {
-    background-color: ;
+body {
+    background-color: var(--main-bg-color);
+}
+
+.input-section {
+    display: flex;
+    flex-direction:column;
 }

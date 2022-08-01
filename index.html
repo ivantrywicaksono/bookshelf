@@ -8,38 +8,55 @@
     <title>My Bookshelf</title>
 </head>
 <body>
-    <header class="navbar">
-        <nav class="topbar">
-            <h1>My Bookshelf</h1>
-            <ul class="topbar_links">
-                <li><a href="#">About</a></li>    
-            </ul>
-        </nav>
-        <nav class="shelves">
-            <ul class="links">
-                <li><a href="#"><h2>Not Started</h2></a></li>
-                <li><a href="#"><h2>In Progress</h2></a></li>
-                <li><a href="#"><h2>Finished</h2></a></li>
-            </ul>
-        </nav>
+    <header class="nav-container">
+        <h1>My Bookshelf</h1>
     </header>
 
     <main>
-        <section class="input_section">
-            <form id="inputBook">
+        <section class="input-section">
+            <form id="js-book-form">
                 <div class="input">
-                    <label for="book-title">Title</label>
-                    <input type="text" id="book-title">
+                    <label for="js-book-title">Title</label>
+                    <input type="text" id="js-book-title">
                 </div>
                 <div class="input">
-                    <label for="book-author">Author</label>
-                    <input type="text" id="book-author">
+                    <label for="js-book-author">Author</label>
+                    <input type="text" id="js-book-author">
                 </div>
                 <div class="input">
-                    <label for="book-year">Year</label>
-                    <input type="number" id="book-year">
+                    <label for="js-book-year">Year</label>
+                    <input type="year" id="js-book-year">
                 </div>
+                <div class="input">
+                    <label for="js-book-status">Status</label>
+                    <select name="book-status" id="js-book-status">
+                        <option value="0">Not Started</option>
+                        <option value="1">In Progress</option>
+                        <option value="2">Finished</option>
+                    </select>
+                </div>
+                <button type="submit">Add</button>
             </form>
+        </section>
+        <section>
+            <div class="shelves-container">
+                <div class="shelves-switch">
+                    <button type="button" id="js-not-started">Not Started</button>
+                    <button type="button" id="js-in-progress">In Progress</button>
+                    <button type="button" id="js-finished">Finished</button>    
+                </div>
+                <div class="shelves-content">
+                    <div id="js-not-started__list">
+                        <h1>Not Started</h1>
+                    </div>
+                    <div id="js-in-progress__list">
+                        <h1>In Progress</h1>
+                    </div>
+                    <div id="js-finished__list">
+                        <h1>Finished</h1>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
