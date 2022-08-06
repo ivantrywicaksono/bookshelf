@@ -1,12 +1,13 @@
 const bookDataList = [];
+const SUBMIT_EVENT = "submit-event";
 
-// const submitBtn = document.getElementById("js-submit-book-btn");
+
 function generateBookDataObject(title, author, year, bookStatus) {
     return {
         title,
         author,
         year,
-        status,
+        bookStatus,
         id: +new Date()
     }
 }
@@ -20,18 +21,22 @@ function addBook() {
     const bookData = generateBookDataObject(title, author, year, bookStatus);
     
     bookDataList.push(bookData);
-    document.dispatchEvent(new Event('submit-book'));
+
+    document.dispatchEvent(new Event(SUBMIT_EVENT));
 }
-
-
-console.log(bookDataList);
 
 document.addEventListener('DOMContentLoaded', function () {
     const bookForm = document.getElementById("js-book-form");
     
     bookForm.addEventListener("submit", function (event) {
         event.preventDefault();
-        
+
+        addBook();
     });
 
+    document.addEventListener(SUBMIT_EVENT, function () {
+        console.log(bookDataList);
+
+        renderBooks();
+    });
 });
