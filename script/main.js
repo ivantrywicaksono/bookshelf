@@ -26,11 +26,11 @@ function addBook() {
 }
 
 function makeBook(bookObject) {
-    const bookTitle = document.createElement("h2");
+    const bookTitle = document.createElement("h3");
     bookTitle.innerText = bookObject.title;
 
     const bookAuthor = document.createElement("p");
-    bookAuthor.innerText = `Author: ${bookObject.author}.`;
+    bookAuthor.innerText = `Author: ${bookObject.author}`;
 
     const bookYear = document.createElement("p");
     bookYear.innerText = `Publication year: ${bookObject.year}`;
