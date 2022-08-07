@@ -17,19 +17,19 @@
             <form name="book-data" id="js-book-form">
                 <div class="input">
                     <label for="js-book-title">Title</label>
-                    <input type="text" id="js-book-title">
+                    <input type="text" id="js-book-title" required>
                 </div>
                 <div class="input">
                     <label for="js-book-author">Author</label>
-                    <input type="text" id="js-book-author">
+                    <input type="text" id="js-book-author" required>
                 </div>
                 <div class="input">
                     <label for="js-book-year">Year</label>
-                    <input type="number" id="js-book-year">
+                    <input type="number" id="js-book-year" required>
                 </div>
                 <div class="input">
                     <label for="js-book-status">Status</label>
-                    <select name="book-status" id="js-book-status">
+                    <select name="book-status" id="js-book-status" required>
                         <option value="0">Not Started</option>
                         <option value="1">In Progress</option>
                         <option value="2">Finished</option>
@@ -41,9 +41,9 @@
         <section>
             <div class="shelves-container">
                 <div class="shelves-switch">
-                    <button type="button" id="js-not-started">Not Started</button>
-                    <button type="button" id="js-in-progress">In Progress</button>
-                    <button type="button" id="js-finished">Finished</button>    
+                    <a href="#not-started-container"><button type="button" id="js-not-started">Not Started</button></a>
+                    <a href="#in-progress-container"><button type="button" id="js-in-progress">In Progress</button></a>
+                    <a href="#finished-container"><button type="button" id="js-finished">Finished</button></a>    
                 </div>
                 <div class="book-search">
                     <h1>Find Book</h1>
@@ -55,7 +55,7 @@
                     <input type="text" id="js-book-search-input">
                     <button type="submit">Search</button>
                 </div>
-                <div class="shelves-content">
+                <div class="shelf-content">
                     <div id="not-started-container">
                         <h1>Not Started</h1>
 
