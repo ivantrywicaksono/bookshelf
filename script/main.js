@@ -2,12 +2,12 @@ const bookDataList = [];
 const RENDER_EVENT = "render-event";
 
 
-function generateBookDataObject(title, author, year, bookStatus) {
+function generateBookDataObject(title, author, year, isComplete) {
     return {
         title,
         author,
         year,
-        bookStatus,
+        isComplete,
         id: +new Date()
     }
 }
@@ -16,9 +16,9 @@ function addBook() {
     const title = document.getElementById("js-book-title").value;
     const author = document.getElementById("js-book-author").value;
     const year = document.getElementById("js-book-year").value;
-    const bookStatus = document.getElementById("js-book-status").value;
+    const isComplete = document.getElementById("js-book-status").checked;
     
-    const bookData = generateBookDataObject(title, author, year, bookStatus);
+    const bookData = generateBookDataObject(title, author, year, isComplete);
     
     bookDataList.push(bookData);
 
@@ -38,7 +38,7 @@ function makeBook(bookObject) {
     const bookDataContainer = document.createElement("div");
     bookDataContainer.append(bookTitle, bookAuthor, bookYear);
 
-    const shelfItemContainer = document.createElement("div");
+    const shelfItemContainer = document.createElement("article");
     shelfItemContainer.append(bookDataContainer);
 
     return shelfItemContainer;
@@ -54,21 +54,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener(RENDER_EVENT, function () {
-        const notStartedList = document.getElementById("js-not-started-list");
-        notStartedList.innerHTML = "";
-
-        const inProgressList = document.getElementById("js-in-progress-list");
-        inProgressList.innerHTML = "";
+        console.log(bookDataList);
+        const inCompleteList = document.getElementById("js-incomplete-list");
+        inCompleteList.innerHTML = "";
         
-        const finishedList = document.getElementById("js-finished-list");
-        finishedList.innerHTML = "";
+        const completeList = document.getElementById("js-complete-list");
+        completeList.innerHTML = "";
 
         bookDataList.forEach(book => {
             const bookElement = makeBook(book);
             
-            if (book.bookStatus == 0) notStartedList.append(bookElement);
-            if (book.bookStatus == 1) inProgressList.append(bookElement);
-            if (book.bookStatus == 2) finishedList.append(bookElement);
+            if (book.isComplete == false) inCompleteList.append(bookElement);
+            if (book.isComplete == true) completeList.append(bookElement);
         });
 
     });

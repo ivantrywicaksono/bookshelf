@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookshelf</title>
+</head>
+<body>
+    <header class="nav-container">
+        <h1>My Bookshelf</h1>
+    </header>
+
+    <main>
+        <section class="input-section">
+            <form name="book-data" id="js-book-form">
+                <div class="input">
+                    <label for="js-book-title">Title</label>
+                    <input type="text" id="js-book-title" required>
+                </div>
+                <div class="input">
+                    <label for="js-book-author">Author</label>
+                    <input type="text" id="js-book-author" required>
+                </div>
+                <div class="input">
+                    <label for="js-book-year">Year</label>
+                    <input type="number" id="js-book-year" required>
+                </div>
+                <div class="input">
+                    <label for="js-book-status">Finished</label>
+                    <input type="checkbox" name="book-status" id="js-book-status">
+                </div>
+                <button type="submit" id="js-submit-book-btn">Add</button>
+            </form>
+        </section>
+        <section>
+            <div class="shelves-container">
+                <div class="shelves-switch">
+                    <a href="#not-started-container"><button type="button" id="js-not-started">Not Started</button></a>
+                    <a href="#in-progress-container"><button type="button" id="js-in-progress">In Progress</button></a>
+                    <a href="#finished-container"><button type="button" id="js-finished">Finished</button></a>    
+                </div>
+                <div class="book-search">
+                    <h2>Find Book</h2>
+                    <select name="search-category" id="js-search-category">
+                        <option value="title">Title</option>
+                        <option value="author">Author</option>
+                        <option value="year">Year</option>
+                    </select>
+                    <input type="text" id="js-book-search-input">
+                    <button type="submit">Search</button>
+                </div>
+                <div class="shelf-content">
+                    <div id="not-started-container">
+                        <h2>Not Started</h2>
+
+                        <div id="js-not-started-list"></div>
+                    </div>
+                    <div id="in-progress-container">
+                        <h2>In Progress</h2>
+
+                        <div id="js-in-progress-list"></div>
+                    </div>
+                    <div id="finished-container">
+                        <h2>Finished</h2>
+
+                        <div id="js-finished-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script/main.js"></script>
+</body>
+</html>
