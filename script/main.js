@@ -30,16 +30,40 @@ function makeBook(bookObject) {
     bookTitle.innerText = bookObject.title;
 
     const bookAuthor = document.createElement("p");
-    bookAuthor.innerText = `Author: ${bookObject.author}`;
+    bookAuthor.innerText = `Penulis: ${bookObject.author}`;
 
     const bookYear = document.createElement("p");
-    bookYear.innerText = `Publication year: ${bookObject.year}`;
+    bookYear.innerText = `Tahun: ${bookObject.year}`;
 
-    const bookDataContainer = document.createElement("div");
-    bookDataContainer.append(bookTitle, bookAuthor, bookYear);
 
     const shelfItemContainer = document.createElement("article");
-    shelfItemContainer.append(bookDataContainer);
+    shelfItemContainer.classList.add("book_item");
+    shelfItemContainer.append(bookTitle, bookAuthor, bookYear);
+    
+    const bookActionContainer = document.createElement("div");
+    bookActionContainer.classList.add("action");
+
+    if (bookObject.isComplete == true) {
+        const unFinishButton = document.createElement("button");
+        unFinishButton.classList.add("green");
+        unFinishButton.innerText = "Belum selesai dibaca"
+        
+        bookActionContainer.append(unFinishButton);
+    } else {
+        const finishButton = document.createElement("button");
+        finishButton.classList.add("green");
+        finishButton.innerText = "Selesai dibaca"
+        
+        bookActionContainer.append(finishButton);
+    } 
+
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("red");
+    deleteButton.innerText = "Hapus Buku";
+
+    bookActionContainer.append(deleteButton);
+
+    shelfItemContainer.append(bookActionContainer);
 
     return shelfItemContainer;
 }
@@ -61,12 +85,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const completeList = document.getElementById("js-complete-list");
         completeList.innerHTML = "";
 
-        bookDataList.forEach(book => {
+        for (const book of bookDataList) {
             const bookElement = makeBook(book);
             
-            if (book.isComplete == false) inCompleteList.append(bookElement);
-            if (book.isComplete == true) completeList.append(bookElement);
-        });
-
+            if (book.isComplete) completeList.append(bookElement);    
+            else inCompleteList.append(bookElement);
+        }
+            
     });
 });
