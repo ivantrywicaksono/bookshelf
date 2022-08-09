@@ -131,6 +131,25 @@ document.addEventListener('DOMContentLoaded', function () {
         addBook();
     });
 
+    const searchButton = document.getElementById("js-search-btn");
+
+    searchButton.addEventListener("click", function () {
+        console.log("search");
+        const searchTitle = document.getElementById("js-search-book-title").value;
+        const books = document.getElementsByClassName("book_item");
+
+        if (searchTitle == "") {
+            for (const i in books) {
+                books[i].removeAttribute("hidden");
+            }
+        }
+
+        for (const i in books) {
+            if (books[i].firstChild.innerText == searchTitle) books[i].removeAttribute("hidden");
+            else books[i].setAttribute("hidden", true);
+        }
+    });
+
     document.addEventListener(RENDER_EVENT, function () {
         console.log(bookDataList);
         const inCompleteList = document.getElementById("js-incomplete-list");
@@ -145,6 +164,5 @@ document.addEventListener('DOMContentLoaded', function () {
             if (book.isComplete) completeList.append(bookElement);    
             else inCompleteList.append(bookElement);
         }
-            
     });
 });
