@@ -25,6 +25,48 @@ function addBook() {
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
+function findBook(bookId) {
+    for (const book of bookDataList) {
+        if (book.id == bookId) return book;
+        return null;
+    }
+}
+
+function moveToCompleteList(bookId) {
+    const targetedBookObject = findBook(bookId);
+    
+    if (targetedBookObject.isComplete == null) return;
+
+    targetedBookObject.isComplete = true;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function moveToIncompleteList(bookId) {
+    const targetedBookObject = findBook(bookId);
+    
+    if (targetedBookObject.isComplete == null) return;
+
+    targetedBookObject.isComplete = false;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function findBookIndex(bookId) {
+    for (const index in bookDataList) {
+        if (bookDataList[index].id == bookId) return index;
+    }
+
+    return -1;
+}
+
+function deleteBook(bookId) {
+    const targetedBookIndex = findBookIndex(bookId);
+
+    if (targetedBookIndex == -1) return;
+
+    bookDataList.splice(targetedBookIndex, 1);
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
 function makeBook(bookObject) {
     const bookTitle = document.createElement("h3");
     bookTitle.innerText = bookObject.title;
@@ -43,16 +85,24 @@ function makeBook(bookObject) {
     const bookActionContainer = document.createElement("div");
     bookActionContainer.classList.add("action");
 
-    if (bookObject.isComplete == true) {
+    if (bookObject.isComplete) {
         const unFinishButton = document.createElement("button");
         unFinishButton.classList.add("green");
-        unFinishButton.innerText = "Belum selesai dibaca"
+        unFinishButton.innerText = "Belum selesai dibaca";
+
+        unFinishButton.addEventListener("click", function () {
+            moveToIncompleteList(bookObject.id);
+        });
         
         bookActionContainer.append(unFinishButton);
     } else {
         const finishButton = document.createElement("button");
         finishButton.classList.add("green");
-        finishButton.innerText = "Selesai dibaca"
+        finishButton.innerText = "Selesai dibaca";
+
+        finishButton.addEventListener("click", function () {
+            moveToCompleteList(bookObject.id);
+        });
         
         bookActionContainer.append(finishButton);
     } 
@@ -60,6 +110,10 @@ function makeBook(bookObject) {
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("red");
     deleteButton.innerText = "Hapus Buku";
+
+    deleteButton.addEventListener("click", function () {
+        deleteBook(bookObject.id);
+    });
 
     bookActionContainer.append(deleteButton);
 
