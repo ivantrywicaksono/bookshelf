@@ -1,13 +1,10 @@
 const RENDER_EVENT = "render-event";
-const SAVED_EVENT = "saved-event";
 const bookDataKey = "BOOK_DATA";
 
 let bookDataList = [];
 
 function localSave(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
-    
-    document.dispatchEvent(new Event(SAVED_EVENT));
 }
 
 function localGet(key) {
@@ -68,7 +65,6 @@ function addBook() {
 
 function findBook(bookId) {
     for (const book of bookDataList) {
-        console.log(book.id);
         if (book.id === bookId) return book;
     }
     return null;
@@ -189,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchButton = document.getElementById("js-search-btn");
 
     searchButton.addEventListener("click", function () {
-        console.log("search");
         const books = document.getElementsByClassName("book_item");
         const searchTitle = document.getElementById("js-search-book-title").value;
 
@@ -205,7 +200,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-    console.log(bookDataList);
     const inCompleteList = document.getElementById("js-incomplete-list");
     inCompleteList.innerHTML = "";
     
@@ -218,8 +212,4 @@ document.addEventListener(RENDER_EVENT, function () {
         if (book.isComplete) completeList.append(bookElement);    
         else inCompleteList.append(bookElement);
     }
-});
-
-document.addEventListener(SAVED_EVENT, function () {
-    console.log(localGet(bookDataKey));
 });
