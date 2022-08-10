@@ -1,5 +1,22 @@
-const bookDataList = [];
 const RENDER_EVENT = "render-event";
+const SAVED_EVENT = "saved-event";
+const bookDataKey = "BOOK_DATA";
+
+let bookDataList = [];
+
+function localSave(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+    
+    document.dispatchEvent(new Event(SAVED_EVENT));
+}
+
+function localGet(key) {
+    if (localStorage.length === 0) localSave(key, []);
+    if (localStorage.getItem(key) == "undefined") localSave(key, [])
+    return JSON.parse(localStorage.getItem(key));
+}
+
+bookDataList = localGet(bookDataKey);
 
 
 function generateBookDataObject(title, author, year, isComplete) {
@@ -12,15 +29,32 @@ function generateBookDataObject(title, author, year, isComplete) {
     }
 }
 
+
+localSave(bookDataKey, bookDataList);
+
 function addBook() {
-    const title = document.getElementById("js-book-title").value;
-    const author = document.getElementById("js-book-author").value;
-    const year = document.getElementById("js-book-year").value;
-    const isComplete = document.getElementById("js-book-status").checked;
+    const titleField = document.getElementById("js-book-title");
+    const title = titleField.value;
+
+    const authorField = document.getElementById("js-book-author");
+    const author = authorField.value;
+
+    const yearField = document.getElementById("js-book-year");
+    const year = yearField.value;
+
+    const isCompleteField = document.getElementById("js-book-status");
+    const isComplete = isCompleteField.checked;
     
     const bookData = generateBookDataObject(title, author, year, isComplete);
     
     bookDataList.push(bookData);
+
+    localSave(bookDataKey, bookDataList);
+
+    titleField.value = "";
+    authorField.value = "";
+    yearField.value = "";
+    isCompleteField.checked = false;
 
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
@@ -64,18 +98,23 @@ function deleteBook(bookId) {
     if (targetedBookIndex == -1) return;
 
     bookDataList.splice(targetedBookIndex, 1);
+
+    localSave(bookDataKey, bookDataList);
+
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
 function makeBook(bookObject) {
+    const {title, author, year, isComplete, id} = bookObject;
+
     const bookTitle = document.createElement("h3");
-    bookTitle.innerText = bookObject.title;
+    bookTitle.innerText = title;
 
     const bookAuthor = document.createElement("p");
-    bookAuthor.innerText = `Penulis: ${bookObject.author}`;
+    bookAuthor.innerText = `Penulis: ${author}`;
 
     const bookYear = document.createElement("p");
-    bookYear.innerText = `Tahun: ${bookObject.year}`;
+    bookYear.innerText = `Tahun: ${year}`;
 
 
     const shelfItemContainer = document.createElement("article");
@@ -85,13 +124,13 @@ function makeBook(bookObject) {
     const bookActionContainer = document.createElement("div");
     bookActionContainer.classList.add("action");
 
-    if (bookObject.isComplete) {
+    if (isComplete) {
         const unFinishButton = document.createElement("button");
         unFinishButton.classList.add("green");
         unFinishButton.innerText = "Belum selesai dibaca";
 
         unFinishButton.addEventListener("click", function () {
-            moveToIncompleteList(bookObject.id);
+            moveToIncompleteList(id);
         });
         
         bookActionContainer.append(unFinishButton);
@@ -101,7 +140,7 @@ function makeBook(bookObject) {
         finishButton.innerText = "Selesai dibaca";
 
         finishButton.addEventListener("click", function () {
-            moveToCompleteList(bookObject.id);
+            moveToCompleteList(id);
         });
         
         bookActionContainer.append(finishButton);
@@ -112,7 +151,7 @@ function makeBook(bookObject) {
     deleteButton.innerText = "Hapus Buku";
 
     deleteButton.addEventListener("click", function () {
-        deleteBook(bookObject.id);
+        deleteBook(id);
     });
 
     bookActionContainer.append(deleteButton);
@@ -124,6 +163,8 @@ function makeBook(bookObject) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const bookForm = document.getElementById("js-book-form");
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
     
     bookForm.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -164,5 +205,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (book.isComplete) completeList.append(bookElement);    
             else inCompleteList.append(bookElement);
         }
+    });
+
+    document.addEventListener(SAVED_EVENT, function () {
+        console.log(localGet(bookDataKey));
     });
 });
