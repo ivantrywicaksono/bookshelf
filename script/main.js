@@ -44,6 +44,18 @@ function addBook() {
 
     const isCompleteField = document.getElementById("js-book-status");
     const isComplete = isCompleteField.checked;
+
+    titleField.value = "";
+    authorField.value = "";
+    yearField.value = "";
+    isCompleteField.checked = false;
+
+    for (const book of bookDataList) {
+        if (title == book.title) {
+            alert("Maaf, Anda sudah memiliki buku dengan judul yang sama");
+            return;
+        }
+    }
     
     const bookData = generateBookDataObject(title, author, year, isComplete);
     
@@ -51,36 +63,38 @@ function addBook() {
 
     localSave(bookDataKey, bookDataList);
 
-    titleField.value = "";
-    authorField.value = "";
-    yearField.value = "";
-    isCompleteField.checked = false;
-
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
 function findBook(bookId) {
     for (const book of bookDataList) {
-        if (book.id == bookId) return book;
-        return null;
+        console.log(book.id);
+        if (book.id === bookId) return book;
     }
+    return null;
 }
 
 function moveToCompleteList(bookId) {
     const targetedBookObject = findBook(bookId);
     
-    if (targetedBookObject.isComplete == null) return;
+    if (targetedBookObject == null) return;
 
     targetedBookObject.isComplete = true;
+
+    localSave(bookDataKey, bookDataList);
+
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
 function moveToIncompleteList(bookId) {
     const targetedBookObject = findBook(bookId);
     
-    if (targetedBookObject.isComplete == null) return;
+    if (targetedBookObject.isComplete === null) return;
 
     targetedBookObject.isComplete = false;
+
+    localSave(bookDataKey, bookDataList);
+
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
@@ -88,7 +102,6 @@ function findBookIndex(bookId) {
     for (const index in bookDataList) {
         if (bookDataList[index].id == bookId) return index;
     }
-
     return -1;
 }
 
@@ -162,10 +175,11 @@ function makeBook(bookObject) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    document.dispatchEvent(new Event(RENDER_EVENT));
+
+
     const bookForm = document.getElementById("js-book-form");
 
-    document.dispatchEvent(new Event(RENDER_EVENT));
-    
     bookForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -176,38 +190,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     searchButton.addEventListener("click", function () {
         console.log("search");
-        const searchTitle = document.getElementById("js-search-book-title").value;
         const books = document.getElementsByClassName("book_item");
+        const searchTitle = document.getElementById("js-search-book-title").value;
 
         if (searchTitle == "") {
-            for (const i in books) {
-                books[i].removeAttribute("hidden");
-            }
+            for (const i in books) books[i].removeAttribute("hidden");
         }
 
         for (const i in books) {
             if (books[i].firstChild.innerText == searchTitle) books[i].removeAttribute("hidden");
             else books[i].setAttribute("hidden", true);
         }
-    });
+    });    
+});
 
-    document.addEventListener(RENDER_EVENT, function () {
-        console.log(bookDataList);
-        const inCompleteList = document.getElementById("js-incomplete-list");
-        inCompleteList.innerHTML = "";
+document.addEventListener(RENDER_EVENT, function () {
+    console.log(bookDataList);
+    const inCompleteList = document.getElementById("js-incomplete-list");
+    inCompleteList.innerHTML = "";
+    
+    const completeList = document.getElementById("js-complete-list");
+    completeList.innerHTML = "";
+
+    for (const book of bookDataList) {
+        const bookElement = makeBook(book);
         
-        const completeList = document.getElementById("js-complete-list");
-        completeList.innerHTML = "";
+        if (book.isComplete) completeList.append(bookElement);    
+        else inCompleteList.append(bookElement);
+    }
+});
 
-        for (const book of bookDataList) {
-            const bookElement = makeBook(book);
-            
-            if (book.isComplete) completeList.append(bookElement);    
-            else inCompleteList.append(bookElement);
-        }
-    });
-
-    document.addEventListener(SAVED_EVENT, function () {
-        console.log(localGet(bookDataKey));
-    });
+document.addEventListener(SAVED_EVENT, function () {
+    console.log(localGet(bookDataKey));
 });
