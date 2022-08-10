@@ -9,7 +9,7 @@ function localSave(key, value) {
 
 function localGet(key) {
     if (localStorage.length === 0) localSave(key, []);
-    if (localStorage.getItem(key) == "undefined") localSave(key, [])
+    if (localStorage.getItem(key) == "undefined" || "null") localSave(key, []);
     return JSON.parse(localStorage.getItem(key));
 }
 
