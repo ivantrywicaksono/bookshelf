@@ -1,20 +1,18 @@
 const RENDER_EVENT = "render-event";
+const INIT_LOAD = "init-load";
 const bookDataKey = "BOOK_DATA";
 
-let bookDataList;
+let bookDataList = [];
+
+document.dispatchEvent(new Event(INIT_LOAD));
 
 function localSave(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
 
 function localGet(key) {
-    if (localStorage.length === 0) localSave(key, []);
-    if (localStorage.getItem(key) == "undefined" || "null") localSave(key, []);
     return JSON.parse(localStorage.getItem(key));
 }
-
-bookDataList = localGet(bookDataKey);
-
 
 function generateBookDataObject(title, author, year, isComplete) {
     return {
@@ -26,8 +24,11 @@ function generateBookDataObject(title, author, year, isComplete) {
     }
 }
 
-
-localSave(bookDataKey, bookDataList);
+document.addEventListener(INIT_LOAD, function () {
+    const dataList = localGet(bookDataKey);
+    for (const data of dataList) bookDataList.push(data);
+    localSave(bookDataKey, bookDataList);
+});
 
 function addBook() {
     const titleField = document.getElementById("js-book-title");
@@ -171,6 +172,7 @@ function makeBook(bookObject) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    document.dispatchEvent(new Event(INIT_LOAD));
     document.dispatchEvent(new Event(RENDER_EVENT));
 
 
