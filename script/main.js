@@ -1,7 +1,7 @@
 const RENDER_EVENT = "render-event";
 const bookDataKey = "BOOK_DATA";
 
-let bookDataList = [];
+let bookDataList;
 
 function localSave(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
