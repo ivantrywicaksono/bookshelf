@@ -105,13 +105,13 @@ main {
     color: cornflowerblue;
 }
 
-/* .search_section > form {
+.search_section > form {
     padding: 16px;
     width: 100%;
     display: grid;
     grid-template-columns: auto 1fr 0.5fr;
     grid-gap: 10px;
-} */
+}
 
 .search_section > form > label {
     display: flex;
@@ -166,14 +166,21 @@ main {
     margin: 0 5px 0 0;
     border-radius: 5px;
     cursor: pointer;
+    height: 30px;
+    width: 30px;
 }
 
+.book_shelf > .book_list > .book_item > .action > button img {
+    height: 20px;
+    width: 20px;
+}
 .book_shelf > .book_list > .book_item > .action > .green {
-    background-color: darkgreen;
+    background-color: rgb(0, 128, 0);
     color: white;
+    width: 45px;
 }
 
 .book_shelf > .book_list > .book_item > .action > .red {
-    background-color: darkred;
+    background-color: rgb(215, 29, 29);
     color: white;
 }

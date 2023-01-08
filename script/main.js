@@ -137,7 +137,7 @@ function makeBook(bookObject) {
     if (isComplete) {
         const unFinishButton = document.createElement("button");
         unFinishButton.classList.add("green");
-        unFinishButton.innerText = "Belum selesai dibaca";
+        unFinishButton.innerHTML = '<img src="./assets/icons/swap_vertical.svg">';
 
         unFinishButton.addEventListener("click", function () {
             moveToIncompleteList(id);
@@ -147,7 +147,7 @@ function makeBook(bookObject) {
     } else {
         const finishButton = document.createElement("button");
         finishButton.classList.add("green");
-        finishButton.innerText = "Selesai dibaca";
+        finishButton.innerHTML = '<img src="./assets/icons/swap_vertical.svg">';
 
         finishButton.addEventListener("click", function () {
             moveToCompleteList(id);
@@ -158,7 +158,7 @@ function makeBook(bookObject) {
 
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("red");
-    deleteButton.innerText = "Hapus Buku";
+    deleteButton.innerHTML = '<img src="./assets/icons/delete_forever.svg">';
 
     deleteButton.addEventListener("click", function () {
         deleteBook(id);
