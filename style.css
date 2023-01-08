@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=Poppins:wght@400;600&display=swap');
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-body, input, button {
-    font-family: 'Open Sans', sans-serif;
+h1, h2, h3, label, button {
+    font-family: 'Poppins', sans-serif;
+}
+p, input {
+    font-family: 'Inter', sans-serif;
 }
 
 input, button {
@@ -100,13 +105,13 @@ main {
     color: cornflowerblue;
 }
 
-.search_section > form {
+/* .search_section > form {
     padding: 16px;
     width: 100%;
     display: grid;
     grid-template-columns: auto 1fr 0.5fr;
     grid-gap: 10px;
-}
+} */
 
 .search_section > form > label {
     display: flex;
@@ -116,9 +121,12 @@ main {
 .search_section > form > input {
     padding: 5px;
     border-radius: 5px;
+    width: 100%;
 }
 
 .search_section > form > button {
+    margin-top: 5px;
+    padding: 5px 8px;
     background-color: cornflowerblue;
     color: white;
     border: 0;
